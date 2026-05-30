@@ -9,7 +9,7 @@ function getInitialTheme() {
     const saved = localStorage.getItem('maetor_theme')
     if (saved === 'light' || saved === 'dark') return saved
   } catch {}
-  return 'light'
+  return 'dark'
 }
 
 export default function App() {
@@ -18,8 +18,8 @@ export default function App() {
   const supplierState = useSuppliers()
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark')
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light')
     } else {
       document.documentElement.removeAttribute('data-theme')
     }
@@ -30,8 +30,8 @@ export default function App() {
     <div id="app">
       <nav id="topnav">
         <div className="nav-brand">
-          <span className="brand-dot" />
-          <span>maetor</span>
+          <span className="brand-mark" aria-hidden="true" />
+          <span className="brand-name">Maetor</span>
         </div>
 
         <div className="nav-center">
@@ -40,7 +40,7 @@ export default function App() {
             onClick={() => setTab('estimate')}
             aria-label="Estimator"
           >
-            <Calculator size={16} weight={tab === 'estimate' ? 'fill' : 'regular'} />
+            <Calculator size={15} weight={tab === 'estimate' ? 'fill' : 'regular'} />
             <span>Estimate</span>
           </button>
           <button
@@ -48,17 +48,17 @@ export default function App() {
             onClick={() => setTab('suppliers')}
             aria-label="Suppliers"
           >
-            <Buildings size={16} weight={tab === 'suppliers' ? 'fill' : 'regular'} />
+            <Buildings size={15} weight={tab === 'suppliers' ? 'fill' : 'regular'} />
             <span>Suppliers</span>
           </button>
         </div>
 
         <button
           className="theme-btn"
-          onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
-          aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+          onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
         </button>
       </nav>
 

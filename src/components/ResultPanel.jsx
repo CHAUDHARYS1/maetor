@@ -4,7 +4,7 @@ export default function ResultPanel({ result }) {
   if (result.state === 'wait') {
     return (
       <div className="result-wait">
-        Enter both ZIP codes to see an estimate.
+        Enter both ZIP codes to see an estimate
       </div>
     )
   }
@@ -27,8 +27,6 @@ export default function ResultPanel({ result }) {
   } = result
 
   const hasLead = leadMin > 0 || leadMax > 0
-
-  // Stable animation key: changes whenever the arrival dates change
   const animKey = prettyShort(arriveEarliestD) + '-' + prettyShort(arriveLatestD)
 
   return (
@@ -36,34 +34,36 @@ export default function ResultPanel({ result }) {
 
       {/* Hero card */}
       <div className="result-hero">
-        <div className="result-eyebrow">
-          {isWindow ? 'Estimated delivery window' : 'Estimated delivery'}
-        </div>
-
-        {isWindow ? (
-          <div className="result-date-row">
-            <span className="result-date sm">{prettyShort(arriveEarliestD)}</span>
-            <span className="result-sep">–</span>
-            <span className="result-date sm">{prettyShort(arriveLatestD)}</span>
+        <div className="result-hero-body">
+          <div className="result-eyebrow">
+            {isWindow ? 'Estimated window' : 'Arrives'}
           </div>
-        ) : (
-          <div className="result-date-row">
-            <span className="result-date">{prettyShort(arriveEarliestD)}</span>
-            <span className="result-dow">{DOW[arriveEarliestD.getDay()]}</span>
-          </div>
-        )}
 
-        <div className="result-tags">
-          <Tag>{svc.name.replace('®', '®')}</Tag>
-          <Tag>{transit} transit {transit === 1 ? 'day' : 'days'}</Tag>
-          {isGround && dist > 0 && <Tag>~{dist.toLocaleString()} mi</Tag>}
-          {hasLead && leadMin === leadMax && (
-            <Tag>+{leadMin} {supplierName ? 'day lead' : 'handling'}</Tag>
+          {isWindow ? (
+            <div className="result-date-row">
+              <span className="result-date sm">{prettyShort(arriveEarliestD)}</span>
+              <span className="result-sep">–</span>
+              <span className="result-date sm">{prettyShort(arriveLatestD)}</span>
+            </div>
+          ) : (
+            <div className="result-date-row">
+              <span className="result-date">{prettyShort(arriveEarliestD)}</span>
+              <span className="result-dow">{DOW[arriveEarliestD.getDay()]}</span>
+            </div>
           )}
-          {hasLead && leadMin !== leadMax && (
-            <Tag>{leadMin}–{leadMax} day lead</Tag>
-          )}
-          {supplierName && <Tag>{supplierName}</Tag>}
+
+          <div className="result-tags">
+            <Tag>{svc.name.replace('®', '®')}</Tag>
+            <Tag>{transit} transit {transit === 1 ? 'day' : 'days'}</Tag>
+            {isGround && dist > 0 && <Tag>~{dist.toLocaleString()} mi</Tag>}
+            {hasLead && leadMin === leadMax && (
+              <Tag>+{leadMin} {supplierName ? 'day lead' : 'handling'}</Tag>
+            )}
+            {hasLead && leadMin !== leadMax && (
+              <Tag>{leadMin}–{leadMax} day lead</Tag>
+            )}
+            {supplierName && <Tag>{supplierName}</Tag>}
+          </div>
         </div>
       </div>
 
@@ -121,7 +121,10 @@ function Tag({ children }) {
 function TlRow({ label, sub, val, accent, last, small }) {
   return (
     <div className="tl-row">
-      <span className={`tl-dot ${accent ? 'accent' : ''}`} />
+      <div className="tl-track">
+        <span className={`tl-dot ${accent ? 'accent' : ''}`} />
+        {!last && <span className="tl-connector" />}
+      </div>
       <div className="tl-body">
         <div className="tl-label">{label}</div>
         {sub && <div className="tl-sub">{sub}</div>}
