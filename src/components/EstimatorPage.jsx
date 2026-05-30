@@ -63,12 +63,14 @@ export default function EstimatorPage({ suppliers }) {
               <button
                 className={source === 'warehouse' ? 'on' : ''}
                 onClick={() => pickSource('warehouse')}
+                aria-pressed={source === 'warehouse'}
               >
                 Our Warehouse
               </button>
               <button
                 className={source === 'dropship' ? 'on' : ''}
                 onClick={() => pickSource('dropship')}
+                aria-pressed={source === 'dropship'}
               >
                 Dropship Supplier
               </button>
@@ -186,7 +188,7 @@ export default function EstimatorPage({ suppliers }) {
                     min={0}
                     max={120}
                     value={handling}
-                    onChange={e => setHandling(e.target.value)}
+                    onChange={e => setHandling(Number(e.target.value))}
                   />
                 </div>
               )}
@@ -202,6 +204,7 @@ export default function EstimatorPage({ suppliers }) {
                   className={`toggle ${override ? 'on' : ''}`}
                   onClick={() => setOverride(o => !o)}
                   aria-label={override ? 'Disable transit override' : 'Enable transit override'}
+                  aria-pressed={override}
                 />
               </div>
 
@@ -215,7 +218,7 @@ export default function EstimatorPage({ suppliers }) {
                     min={1}
                     max={20}
                     value={ovDays}
-                    onChange={e => setOvDays(e.target.value)}
+                    onChange={e => setOvDays(Number(e.target.value))}
                   />
                 </div>
               )}

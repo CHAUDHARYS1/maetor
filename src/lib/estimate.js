@@ -1,6 +1,11 @@
 import { SERVICES, haversine, groundDays, coords } from "./transit.js";
 import { buildHolidays, parseDate, addBiz, nextBiz, key } from "./calendar.js";
 
+const _holCache = {};
+function holidays(year) {
+  return _holCache[year] ?? (_holCache[year] = buildHolidays(year));
+}
+
 export function compute({ origin, dest, service, source, supplierId, suppliers, ready, handling, override, ovDays }) {
   const oZip = origin.replace(/\D/g, "");
   const dZip = dest.replace(/\D/g, "");
@@ -31,7 +36,7 @@ export function compute({ origin, dest, service, source, supplierId, suppliers, 
   }
 
   const readyD = parseDate(ready);
-  const hol = buildHolidays(readyD.getFullYear());
+  const hol = holidays(readyD.getFullYear());
 
   const shipEarliestD = addBiz(readyD, leadMin, hol);
   const shipLatestD   = addBiz(readyD, leadMax, hol);

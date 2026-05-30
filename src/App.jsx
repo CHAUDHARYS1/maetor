@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { lazy, Suspense, useState, useEffect } from 'react'
 import { Calculator, Buildings, Sun, Moon } from '@phosphor-icons/react'
 import { useSuppliers } from './lib/useSuppliers'
 import EstimatorPage from './components/EstimatorPage'
-import SuppliersPage from './components/SuppliersPage'
+
+const SuppliersPage = lazy(() => import('./components/SuppliersPage'))
 
 function getInitialTheme() {
   try {
@@ -28,37 +29,38 @@ export default function App() {
 
   return (
     <div id="app">
-      <nav id="topnav">
+      <a href="#content" className="skip-link">Skip to main content</a>
+      <nav id="topnav" aria-label="Main">
         <div className="nav-brand">
-          <span className="brand-dot" />
-          <span>maetor</span>
+          <span className="brand-mark" aria-hidden="true" />
+          <span className="brand-name">Maetor</span>
         </div>
 
         <div className="nav-center">
           <button
             className={`navtab ${tab === 'estimate' ? 'on' : ''}`}
             onClick={() => setTab('estimate')}
-            aria-label="Estimator"
+            aria-pressed={tab === 'estimate'}
           >
-            <Calculator size={16} weight={tab === 'estimate' ? 'fill' : 'regular'} />
+            <Calculator size={15} weight={tab === 'estimate' ? 'fill' : 'regular'} aria-hidden="true" />
             <span>Estimate</span>
           </button>
           <button
             className={`navtab ${tab === 'suppliers' ? 'on' : ''}`}
             onClick={() => setTab('suppliers')}
-            aria-label="Suppliers"
+            aria-pressed={tab === 'suppliers'}
           >
-            <Buildings size={16} weight={tab === 'suppliers' ? 'fill' : 'regular'} />
+            <Buildings size={15} weight={tab === 'suppliers' ? 'fill' : 'regular'} aria-hidden="true" />
             <span>Suppliers</span>
           </button>
         </div>
 
         <button
           className="theme-btn"
-          onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
-          aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+          onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          {theme === 'dark' ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}
         </button>
       </nav>
 
@@ -66,13 +68,15 @@ export default function App() {
         {tab === 'estimate' && (
           <EstimatorPage suppliers={supplierState.suppliers} />
         )}
-        {tab === 'suppliers' && (
-          <SuppliersPage {...supplierState} />
-        )}
+        <Suspense fallback={null}>
+          {tab === 'suppliers' && (
+            <SuppliersPage {...supplierState} />
+          )}
+        </Suspense>
       </main>
 
       <footer id="site-footer">
-        Designed and built by SC Design and Consultation
+        Designed and built by <a href="https://chaudharys1.netlify.app/" target="_blank" rel="noopener noreferrer">SC Design and Consultation</a>
       </footer>
     </div>
   )

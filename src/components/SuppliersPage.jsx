@@ -31,13 +31,10 @@ export default function SuppliersPage({ suppliers, add, update, remove, exportJS
             </div>
           ) : (
             suppliers.map(s => (
-              <div
+              <button
                 key={s.id}
                 className="supplier-row"
                 onClick={() => setEditing(s)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={e => e.key === 'Enter' && setEditing(s)}
               >
                 <div className="supplier-info">
                   <div className="supplier-name">{s.name}</div>
@@ -52,7 +49,7 @@ export default function SuppliersPage({ suppliers, add, update, remove, exportJS
                     <span className="pill pill-yel">Dropship</span>
                   )}
                 </div>
-              </div>
+              </button>
             ))
           )}
         </div>

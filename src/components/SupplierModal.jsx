@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function SupplierModal({ supplier, onSave, onDelete, onClose }) {
   const isNew = !supplier.id
@@ -7,6 +7,29 @@ export default function SupplierModal({ supplier, onSave, onDelete, onClose }) {
   const [alwaysDropship, setAlwaysDropship] = useState(supplier.alwaysDropship ?? true)
   const [leadMin,        setLeadMin]        = useState(supplier.leadMin        ?? 5)
   const [leadMax,        setLeadMax]        = useState(supplier.leadMax        ?? 10)
+
+  const sheetRef = useRef(null)
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') { onClose(); return }
+      if (e.key !== 'Tab' || !sheetRef.current) return
+      const focusable = Array.from(
+        sheetRef.current.querySelectorAll(
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+        )
+      )
+      const first = focusable[0]
+      const last  = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [onClose])
 
   const nameValid = name.trim().length > 0
 
@@ -25,7 +48,7 @@ export default function SupplierModal({ supplier, onSave, onDelete, onClose }) {
 
   return (
     <div className="overlay open">
-      <div className="sheet" role="dialog" aria-modal="true" aria-label={isNew ? 'Add Supplier' : 'Edit Supplier'}>
+      <div className="sheet" ref={sheetRef} role="dialog" aria-modal="true" aria-label={isNew ? 'Add Supplier' : 'Edit Supplier'}>
         <div className="handle-bar"><div className="handle" /></div>
 
         <div className="sheet-hdr">
@@ -67,6 +90,7 @@ export default function SupplierModal({ supplier, onSave, onDelete, onClose }) {
                 className={`toggle ${alwaysDropship ? 'on' : ''}`}
                 onClick={() => setAlwaysDropship(v => !v)}
                 aria-label={alwaysDropship ? 'Disable always dropship' : 'Enable always dropship'}
+                aria-pressed={alwaysDropship}
               />
             </div>
           </div>
