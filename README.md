@@ -1,6 +1,6 @@
 # maetor — Arrival Estimator
 
-UPS shipping arrival estimator for CPT · Network Materials. Enter origin and destination ZIPs, pick a service level, and get a business-day delivery estimate — accounting for supplier lead times, handling, and UPS-observed holidays.
+UPS shipping arrival estimator. Enter origin and destination ZIPs, pick a service level, and get a business-day delivery estimate — accounting for supplier lead times, handling, and UPS-observed holidays.
 
 **Live:** [maetor.netlify.app](https://maetor.netlify.app) *(update with your actual URL)*
 
