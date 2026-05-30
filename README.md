@@ -1,8 +1,8 @@
-# maetor — Arrival Estimator
+# Maetor — Arrival Estimator
 
 UPS shipping arrival estimator. Enter origin and destination ZIPs, pick a service level, and get a business-day delivery estimate — accounting for supplier lead times, handling, and UPS-observed holidays.
 
-**Live:** [maetor.netlify.app](https://maetor.netlify.app) *(update with your actual URL)*
+**Live:** [chaudharys1.github.io/maetor](https://chaudharys1.github.io/maetor/)
 
 ---
 
