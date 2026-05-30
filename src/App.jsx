@@ -70,6 +70,10 @@ export default function App() {
           <SuppliersPage {...supplierState} />
         )}
       </main>
+
+      <footer id="site-footer">
+        Designed and built by SC Design and Consultation
+      </footer>
     </div>
   )
 }

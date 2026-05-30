@@ -736,3 +736,15 @@ input:focus-visible, select:focus-visible { outline: none; }
   #topnav { padding: 0 var(--space-4); }
   .nav-brand span:last-child { display: none; }
 }
+
+/* ── Footer ───────────────────────────────────────────── */
+#site-footer {
+  text-align: center;
+  padding: var(--space-5) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-4);
+  border-top: 1px solid var(--line);
+  margin-top: auto;
+}
