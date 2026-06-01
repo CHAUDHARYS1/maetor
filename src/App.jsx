@@ -28,7 +28,7 @@ export default function App() {
   }, [theme])
 
   return (
-    <div id="app">
+    <div id="app" data-view={tab}>
       <a href="#content" className="skip-link">Skip to main content</a>
       <nav id="topnav" aria-label="Main">
         <div className="nav-brand">
